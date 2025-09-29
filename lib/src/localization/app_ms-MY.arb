@@ -1,0 +1,49 @@
+{
+    "@@comment": "Loco json export: ARB (Dart/Flutter)",
+    "@@last_modified": "2025-09-29T03:07:13+0800",
+    "@@author": "anas boyka",
+    "@@x-loco-version": "1.0.29 20250919-1",
+    "submit": "Hantar",
+    "@submit": {
+        "type": "text",
+        "context": "Button text"
+    },
+    "errorFieldRequired": "Medan ini wajib diisi",
+    "@errorFieldRequired": {
+        "type": "text",
+        "context": "error validation text"
+    },
+    "errorPasswordMinLength": "Kata laluan mestilah minimum {value} aksara",
+    "@errorPasswordMinLength": {
+        "type": "text",
+        "context": "error validation password length",
+        "placeholders": {
+            "value": {}
+        }
+    },
+    "errorPasswordLowercase": "Kata laluan mestilah mempunyai sekurang-kurangnya 1 aksara huruf kecil",
+    "@errorPasswordLowercase": {
+        "type": "text",
+        "context": "error validation password need at least 1 lowercase"
+    },
+    "errorPasswordUppercase": "Kata laluan mestilah mempunyai sekurang-kurangnya 1 aksara huruf besar",
+    "@errorPasswordUppercase": {
+        "type": "text",
+        "context": "error validation password"
+    },
+    "errorPasswordNumber": "Kata laluan mestilah mempunyai sekurang-kurangnya 1 nombor",
+    "@errorPasswordNumber": {
+        "type": "text",
+        "context": "error validation password"
+    },
+    "errorPasswordSpecialCharacter": "Kata laluan mestilah mempunyai sekurang-kurangnya 1 aksara khas",
+    "@errorPasswordSpecialCharacter": {
+        "type": "text",
+        "context": "error validation password"
+    },
+    "next": "Seterusnya",
+    "@next": {
+        "type": "text",
+        "context": "Button text"
+    }
+}

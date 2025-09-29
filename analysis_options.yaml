@@ -22,7 +22,28 @@ linter:
   # producing the lint.
   rules:
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    prefer_relative_imports: true
+    use_super_parameters: true
+    require_trailing_commas: true
+    use_if_null_to_convert_nulls_to_bools: true
+    avoid_bool_literals_in_conditional_expressions: true
+    avoid_unnecessary_containers: true
+
+analyzer:
+  plugins:
+    - custom_lint
+  errors:
+    invalid_annotation_target: ignore
+    included_file_warning: ignore
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/*.gr.dart"
+    - "**/*.config.dart"
+    - "**/generated_plugin_registrant.dart"
+
+
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
