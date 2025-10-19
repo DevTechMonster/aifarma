@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Core Flutter Commands
 ```bash
-# Run the app in debug mode (defaults to production environment)
+# Run the app (defaults to main.dart/production environment)
 flutter run
 
 # Run on specific device
@@ -18,9 +18,33 @@ flutter devices                          # List available devices
 flutter clean                            # Clean build files
 flutter pub get                          # Install dependencies
 flutter pub upgrade                      # Upgrade dependencies
-flutter analyze                          # Static analysis
+flutter analyze                          # Static analysis (with riverpod_lint)
 flutter test                             # Run all tests
 flutter test test/widget_test.dart       # Run specific test
+```
+
+### Code Generation
+```bash
+# Generate code for Riverpod, Freezed, and other packages
+flutter packages pub run build_runner build
+
+# Watch for changes and regenerate automatically
+flutter packages pub run build_runner watch
+
+# Clean generated files and rebuild
+flutter packages pub run build_runner build --delete-conflicting-outputs
+```
+
+### Custom Scripts
+```bash
+# Generate localization files from localise.biz
+dart run bin/generate_l10n.dart
+
+# Generate launcher icons
+dart run flutter_launcher_icons
+
+# Process image assets (organize into 2.0x and 3.0x folders)
+dart run image_res:main
 ```
 
 ### Environment-Specific Commands
@@ -28,97 +52,80 @@ flutter test test/widget_test.dart       # Run specific test
 # Run with different environments
 flutter run -t lib/main_dev.dart         # Development environment
 flutter run -t lib/main_staging.dart     # Staging environment
-flutter run -t lib/main_production.dart  # Production environment (default)
+flutter run -t lib/main_production.dart  # Production environment
 
-# Build for different environments and flavors
-# Development builds
+# Build for different environments (Android flavors configured)
 flutter build apk --flavor dev -t lib/main_dev.dart
-flutter build appbundle --flavor dev -t lib/main_dev.dart
-
-# Staging builds
 flutter build apk --flavor staging -t lib/main_staging.dart
-flutter build appbundle --flavor staging -t lib/main_staging.dart
-
-# Production builds
 flutter build apk --flavor production -t lib/main_production.dart
-flutter build appbundle --flavor production -t lib/main_production.dart
-
-# iOS builds (requires macOS)
-flutter build ios --flavor dev -t lib/main_dev.dart
-flutter build ios --flavor staging -t lib/main_staging.dart
-flutter build ios --flavor production -t lib/main_production.dart
-
-# Web builds (environment-specific)
-flutter build web -t lib/main_dev.dart
-flutter build web -t lib/main_staging.dart
-flutter build web -t lib/main_production.dart
-```
-
-### Linting and Code Quality
-```bash
-# Analysis (uses flutter_lints)
-flutter analyze
-
-# No formatter configured - relies on IDE formatting
 ```
 
 ## Code Architecture
 
-### Current Structure
-The app now uses **environment-based configuration** with multiple entry points:
-- `lib/main.dart`: Main application logic with environment-aware UI
-- `lib/main_dev.dart`: Development environment entry point
-- `lib/main_staging.dart`: Staging environment entry point
-- `lib/main_production.dart`: Production environment entry point
-- `lib/config/app_config.dart`: Environment configuration management
-- `MyApp`: Root application widget using AppConfig for theming and titles
-- `MyHomePage`: Main screen showing environment info and counter functionality
-- State management: Simple `setState()` pattern
+### Application Structure
+Modern Flutter architecture with **Riverpod state management**:
+- `lib/main.dart`: Entry point with ProviderScope
+- `lib/app.dart`: Root MaterialApp with routing and localization
+- `lib/src/router/`: Go Router configuration with authentication guards
+- `lib/src/authentication/`: Login, signup, forgot password screens and auth state
+- `lib/src/chat/`: Chat functionality with AI service integration
+- `lib/src/profile/` & `lib/src/settings/`: User profile and app settings
+- `lib/src/shared/`: Reusable components, themes, utils, and global providers
+
+### State Management
+- **Riverpod**: Primary state management solution
+- **Hooks Riverpod**: Used for widgets with lifecycle management
+- **Code Generation**: Riverpod providers use `@riverpod` annotation
+- **Generated Files**: `.g.dart` files are auto-generated (don't edit manually)
+
+### Key Patterns
+- **Authentication Flow**: Auth-guarded routing with redirect logic
+- **Localization**: Multi-language support with generated l10n files
+- **Theming**: Custom theme system with color schemes and typography
+- **Networking**: HTTP client for API calls
+- **Code Generation**: Freezed for immutable data classes, Riverpod for providers
 
 ### Dependencies
-- **Minimal setup**: Only `cupertino_icons` for iOS-style icons
-- **Linting**: `flutter_lints` for code quality
-- **No state management**: Uses built-in `setState()`
-- **No networking**: No HTTP client configured
-- **No routing**: Single screen app
+- **State Management**: `hooks_riverpod`, `riverpod_annotation`
+- **Routing**: `go_router` with authentication guards
+- **Networking**: `http` for API calls
+- **Localization**: `flutter_localizations`, `intl`
+- **UI**: Custom theme system, `cupertino_icons`
+- **Code Generation**: `build_runner`, `freezed`, `riverpod_generator`
+- **Development**: `flutter_lints`, `riverpod_lint`, `custom_lint`
 
-### Platform Configuration
-- **Android**: Uses Kotlin DSL, Java 11 target, multiple build flavors (dev/staging/production)
-  - Base application ID: `my.aifarma`
-  - Dev: `my.aifarma.dev` with "AiFarma Dev" app name
-  - Staging: `my.aifarma.staging` with "AiFarma Staging" app name
-  - Production: `my.aifarma` with "AiFarma" app name
-- **iOS**: Standard Xcode configuration (flavors need additional iOS setup)
-- **Web**: PWA-ready with custom branding colors (#0175C2)
-- **Debug signing**: Android uses debug keystore (not production-ready)
+### Generated Assets
+- `lib/gen/assets.gen.dart`: Auto-generated asset references
+- `lib/gen/fonts.gen.dart`: Auto-generated font references
+- Files ending in `.g.dart`: Riverpod provider implementations
+- Files ending in `.freezed.dart`: Immutable data class implementations
 
 ## Development Notes
 
 ### Key Files
-- `lib/main.dart`: Main application logic with environment-aware UI
-- `lib/config/app_config.dart`: Environment configuration and settings
-- `lib/main_dev.dart`, `lib/main_staging.dart`, `lib/main_production.dart`: Environment entry points
-- `pubspec.yaml`: Dependencies and app configuration
-- `test/widget_test.dart`: Widget tests for counter functionality
-- `android/app/build.gradle.kts`: Android build configuration with flavors
-- `android/app/proguard-rules.pro`: ProGuard configuration for release builds
+- `lib/app.dart`: Main app configuration with theming and routing
+- `lib/src/router/router.dart`: Go Router setup with auth guards
+- `lib/src/authentication/provider/auth_provider.dart`: Authentication state management
+- `lib/src/chat/`: Chat functionality and AI service integration
+- `lib/src/shared/theme/`: Custom theming system
+- `lib/src/localization/`: Generated localization files
+- `bin/generate_l10n.dart`: Script to download and process translations
+- `pubspec.yaml`: Dependencies and Flutter configuration
 
-### Architecture Expansion
-When scaling beyond the current template, consider implementing:
-- Folder structure (`lib/screens/`, `lib/widgets/`, `lib/services/`, `lib/models/`)
-- State management solution (Provider, Riverpod, Bloc)
-- Routing system (GoRouter, Navigator 2.0)
-- API service layer and HTTP client
-- Dependency injection pattern
+### Localization Workflow
+- Translations hosted on localise.biz
+- Run `dart run bin/generate_l10n.dart` to download latest translations
+- Generates `.arb` files in `lib/src/localization/`
+- Flutter automatically generates Dart classes from `.arb` files
 
 ### Testing
-- Uses Flutter's built-in testing framework
-- Current test coverage: Basic counter functionality
+- Uses Flutter's built-in testing framework with Mockito
+- Widget tests configured for Riverpod providers
 - Run tests with `flutter test`
-- Widget testing setup ready for expansion
 
 ### Platform Requirements
-- Flutter SDK ^3.9.2
+- Flutter SDK ^3.35.4
+- Dart SDK >=3.2.0
 - Android: Android Studio/SDK, Java 11+
 - iOS: Xcode (macOS only)
 - Web: Chrome for debugging

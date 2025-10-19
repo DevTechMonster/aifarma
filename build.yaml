@@ -1,0 +1,48 @@
+targets:
+  $default:
+    builders:
+      freezed:
+        generate_for:
+          exclude:
+            - "lib/src/api"  
+      chopper_generator:
+        generate_for:
+          include:
+            - "lib/src/api/*.swagger.dart"
+      swagger_dart_code_generator:
+        options:
+          input_folder: "lib/src/api/swagger"
+          output_folder: "lib/src/api"
+          separate_models: true
+
+global_options:
+  swagger_dart_code_generator:
+    options:
+      applies_builders:
+        - chopper_generator
+    runs_before:
+      - chopper_generator
+  chopper_generator:
+    options:
+      applies_builders:
+        - flutter_gen_runner
+    runs_before:
+      - flutter_gen_runner
+  flutter_gen_runner:
+    options:
+      applies_builders:
+        - freezed
+    runs_before:
+      - freezed
+  freezed:
+    options:
+      applies_builders:
+        - json_serializable
+    runs_before:
+      - json_serializable
+  json_serializable:
+    runs_before:
+      - riverpod_generator
+  riverpod_generator:
+    runs_before:
+      - retrofit_generator
