@@ -9,5 +9,7 @@ abstract class ChatState with _$ChatState {
     @Default([]) List<Message> messages,
     @Default(false) bool isLoading,
     String? error,
+    String? conversationId,
+    String? conversationTitle,
   }) = _ChatState;
 }

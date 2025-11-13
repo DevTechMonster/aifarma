@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../authentication/provider/auth_provider.dart';
+import '../../authentication/provider/auth_providers.dart';
 import '../../shared/utils/extensions.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -93,7 +93,8 @@ class HomeScreen extends ConsumerWidget {
                   'Notifications',
                   Icons.notifications,
                   () => context.scaffoldMessenger.showSnackBar(
-                    const SnackBar(content: Text('Notifications feature coming soon!')),
+                    const SnackBar(
+                        content: Text('Notifications feature coming soon!'),),
                   ),
                 ),
                 _buildActionCard(
@@ -112,7 +113,8 @@ class HomeScreen extends ConsumerWidget {
     );
   }
 
-  Widget _buildActionCard(BuildContext context, String title, IconData icon, VoidCallback onTap) {
+  Widget _buildActionCard(
+      BuildContext context, String title, IconData icon, VoidCallback onTap,) {
     return Card(
       child: InkWell(
         onTap: onTap,

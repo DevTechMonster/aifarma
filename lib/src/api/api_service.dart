@@ -2,11 +2,13 @@
 // import 'dart:convert';
 // import 'dart:io';
 
+import 'package:chopper/chopper.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/retry.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-// import '../authentication/openid_authentication.dart';
-// import 'client_index.dart';
-// import 'debi_service.swagger.dart' show $JsonSerializableConverter;
+import 'aifarma_core_service.swagger.dart' show $JsonSerializableConverter;
+import 'client_index.dart';
 
 part 'api_service.g.dart';
 
@@ -20,11 +22,19 @@ class UnauthorizedException implements Exception {
 }
 
 @riverpod
-String apiBaseUrl(Ref ref) {
-  throw UnimplementedError();
+http.Client httpClient(Ref ref) {
+  // Create client without proxy for localhost development
+  final client = http.Client();
+  return RetryClient(client);
 }
 
-
+@riverpod
+String apiBaseUrl(Ref ref) {
+  // This should be overridden in main_dev.dart, main_staging.dart, or main_production.dart
+  throw UnimplementedError(
+    'apiBaseUrlProvider must be overridden in the ProviderScope',
+  );
+}
 
 // class BaseAuthInterceptor implements Interceptor {
 //   const BaseAuthInterceptor(this.ref);
@@ -102,26 +112,24 @@ String apiBaseUrl(Ref ref) {
 //   }
 // }
 
-// @riverpod
-// AifarmaCoreService aifarmaCoreService(Ref ref) {
-//   final httpClient = ref.watch(httpClientProvider);
-//   final baseUrl =
-//       '${ref.watch(apiBaseUrlProvider)}${ref.watch(debiCorePathProvider)}';
-//   final service = DebiService.create(
-//     client: ChopperClient(
-//       client: httpClient,
-//       baseUrl: Uri.parse(baseUrl),
-//       converter: $JsonSerializableConverter(),
-//       authenticator: OpenIdAuthenticator(ref),
-//       interceptors: [
-//         BaseAuthInterceptor(ref),
-//         HttpLoggingInterceptor(),
-//       ],
-//     ),
-//   );
-//   return service;
-// }
-
+@riverpod
+AifarmaCoreService aifarmaCoreService(Ref ref) {
+  final httpClient = ref.watch(httpClientProvider);
+  final baseUrl = ref.watch(apiBaseUrlProvider);
+  final service = AifarmaCoreService.create(
+    client: ChopperClient(
+      client: httpClient,
+      baseUrl: Uri.parse(baseUrl),
+      converter: $JsonSerializableConverter(),
+      // authenticator: OpenIdAuthenticator(ref),
+      interceptors: [
+        // BaseAuthInterceptor(ref),
+        HttpLoggingInterceptor(),
+      ],
+    ),
+  );
+  return service;
+}
 
 // class OpenIdAuthenticator extends Authenticator {
 //   final Ref ref;

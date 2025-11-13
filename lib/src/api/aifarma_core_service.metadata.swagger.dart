@@ -1,4 +1,4 @@
-// ignore_for_file: type=lint, unused_import
+// ignore_for_file: type=lint
 
 /// Metadata class containing information from SwaggerRequest
 class SwaggerMetaData {

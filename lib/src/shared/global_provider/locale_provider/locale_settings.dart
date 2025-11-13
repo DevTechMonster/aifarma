@@ -19,7 +19,7 @@ class LocaleSettings extends _$LocaleSettings {
     final systemLocale = PlatformDispatcher.instance.locale;
     final systemLanguageCode = systemLocale.languageCode;
 
-    if (systemLanguageCode == "en") {
+    if (systemLanguageCode == 'en') {
       return const Locale('en', 'MY');
     } else {
       return supportedLocale.first;

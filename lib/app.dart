@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'src/shared/global_provider/locale_provider/locale_settings.dart';
 import 'src/router/router.dart';
+import 'src/shared/services/app_lifecycle_service.dart';
 
 class MyApp extends HookConsumerWidget {
   const MyApp({super.key});
@@ -13,6 +14,9 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeSettingsProvider);
     final router = ref.watch(routerProvider);
+    
+    // Initialize app lifecycle service
+    ref.watch(appLifecycleServiceProvider);
 
     return MaterialApp.router(
       title: AppConfig.instance.appName,

@@ -1,8 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../authentication/provider/auth_provider.dart';
+import '../../authentication/provider/auth_providers.dart';
 import '../../shared/utils/extensions.dart';
 import '../../shared/components/app_dialog.dart';
 
@@ -23,30 +25,48 @@ class SettingsScreen extends HookConsumerWidget {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RadioListTile<String>(
+              ListTile(
                 title: const Text('English'),
-                value: 'English',
-                groupValue: selectedLanguage.value,
-                onChanged: (value) {
-                  selectedLanguage.value = value!;
+                leading: Radio<String>(
+                  value: 'English',
+                  groupValue: selectedLanguage.value,
+                  onChanged: (value) {
+                    selectedLanguage.value = value!;
+                    context.navigator.pop();
+                  },
+                ),
+                onTap: () {
+                  selectedLanguage.value = 'English';
                   context.navigator.pop();
                 },
               ),
-              RadioListTile<String>(
+              ListTile(
                 title: const Text('Español'),
-                value: 'Español',
-                groupValue: selectedLanguage.value,
-                onChanged: (value) {
-                  selectedLanguage.value = value!;
+                leading: Radio<String>(
+                  value: 'Español',
+                  groupValue: selectedLanguage.value,
+                  onChanged: (value) {
+                    selectedLanguage.value = value!;
+                    context.navigator.pop();
+                  },
+                ),
+                onTap: () {
+                  selectedLanguage.value = 'Español';
                   context.navigator.pop();
                 },
               ),
-              RadioListTile<String>(
+              ListTile(
                 title: const Text('Français'),
-                value: 'Français',
-                groupValue: selectedLanguage.value,
-                onChanged: (value) {
-                  selectedLanguage.value = value!;
+                leading: Radio<String>(
+                  value: 'Français',
+                  groupValue: selectedLanguage.value,
+                  onChanged: (value) {
+                    selectedLanguage.value = value!;
+                    context.navigator.pop();
+                  },
+                ),
+                onTap: () {
+                  selectedLanguage.value = 'Français';
                   context.navigator.pop();
                 },
               ),

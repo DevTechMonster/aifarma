@@ -12,7 +12,7 @@ bool isValidURL(String urlString) {
 
 /// Checks if password has minLength
 bool hasMinLength(String password, int minLength) {
-  return password.length >= minLength ? true : false;
+  return password.length >= minLength;
 }
 
 /// Checks if password has at least 1 uppercase letter matches

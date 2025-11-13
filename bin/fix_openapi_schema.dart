@@ -4,28 +4,53 @@ import 'dart:convert';
 import 'dart:io';
 
 void main() {
-  final schemaFile = File('lib/src/api/swagger/aifarma_core.json');
+  final swaggerFolder = Directory('lib/src/api/swagger');
 
-  if (!schemaFile.existsSync()) {
-    print('Schema file not found: ${schemaFile.path}');
+  if (!swaggerFolder.existsSync()) {
+    print('Swagger folder not found: ${swaggerFolder.path}');
     exit(1);
   }
 
-  print('Reading OpenAPI schema...');
-  final content = schemaFile.readAsStringSync();
-  final schema = jsonDecode(content) as Map<String, dynamic>;
+  // Find all .json files in the swagger folder
+  final jsonFiles = swaggerFolder
+      .listSync()
+      .whereType<File>()
+      .where((file) => file.path.endsWith('.json'))
+      .toList();
 
-  print('Fixing anyOf patterns...');
-  int fixCount = 0;
-  fixCount += _fixAnyOfInMap(schema);
+  if (jsonFiles.isEmpty) {
+    print('No JSON files found in ${swaggerFolder.path}');
+    exit(1);
+  }
 
-  print('Fixed $fixCount anyOf patterns');
+  print('Found ${jsonFiles.length} JSON file(s) to process');
 
-  print('Writing updated schema...');
-  final encoder = JsonEncoder.withIndent('    ');
-  schemaFile.writeAsStringSync(encoder.convert(schema));
+  int totalFixCount = 0;
+  for (final schemaFile in jsonFiles) {
+    print('\nProcessing: ${schemaFile.path}');
 
-  print('Schema fixed successfully!');
+    try {
+      final content = schemaFile.readAsStringSync();
+      final schema = jsonDecode(content) as Map<String, dynamic>;
+
+      final fixCount = _fixAnyOfInMap(schema);
+      totalFixCount += fixCount;
+
+      if (fixCount > 0) {
+        print('Fixed $fixCount anyOf patterns');
+        final encoder = JsonEncoder.withIndent('    ');
+        schemaFile.writeAsStringSync(encoder.convert(schema));
+        print('Updated: ${schemaFile.path}');
+      } else {
+        print('No fixes needed');
+      }
+    } catch (e) {
+      print('Error processing ${schemaFile.path}: $e');
+      exit(1);
+    }
+  }
+
+  print('\n✓ Completed! Fixed $totalFixCount anyOf patterns across ${jsonFiles.length} file(s)');
 }
 
 int _fixAnyOfInMap(dynamic obj) {

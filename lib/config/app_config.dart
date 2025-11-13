@@ -3,14 +3,12 @@ enum Environment { dev, staging, production }
 class AppConfig {
   final Environment environment;
   final String appName;
-  final String baseUrl;
   final bool enableLogging;
   final bool enableAnalytics;
 
   AppConfig._({
     required this.environment,
     required this.appName,
-    required this.baseUrl,
     required this.enableLogging,
     required this.enableAnalytics,
   });
@@ -22,7 +20,6 @@ class AppConfig {
     _instance = AppConfig._(
       environment: environment,
       appName: _getAppName(environment),
-      baseUrl: _getBaseUrl(environment),
       enableLogging: _getLoggingEnabled(environment),
       enableAnalytics: _getAnalyticsEnabled(environment),
     );
@@ -36,17 +33,6 @@ class AppConfig {
         return 'AiFarma Staging';
       case Environment.production:
         return 'AiFarma';
-    }
-  }
-
-  static String _getBaseUrl(Environment environment) {
-    switch (environment) {
-      case Environment.dev:
-        return 'https://dev-api.aifarma.com';
-      case Environment.staging:
-        return 'https://staging-api.aifarma.com';
-      case Environment.production:
-        return 'https://api.aifarma.com';
     }
   }
 

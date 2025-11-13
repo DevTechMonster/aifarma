@@ -1,13 +1,13 @@
 // coverage:ignore-file
-// ignore_for_file: type=lint, unused_import
+// ignore_for_file: type=lint
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:collection/collection.dart';
 import 'dart:convert';
 
-import 'aifarma_core.enums.swagger.dart' as enums;
+import 'aifarma_core_service.enums.swagger.dart' as enums;
 
-part 'aifarma_core.models.swagger.g.dart';
+part 'aifarma_core_service.models.swagger.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class AgentDto {

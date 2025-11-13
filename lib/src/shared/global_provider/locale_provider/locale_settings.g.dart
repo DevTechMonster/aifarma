@@ -15,15 +15,15 @@ const localeSettingsProvider = LocaleSettingsProvider._();
 final class LocaleSettingsProvider
     extends $NotifierProvider<LocaleSettings, Locale> {
   const LocaleSettingsProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'localeSettingsProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'localeSettingsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$localeSettingsHash();
@@ -41,7 +41,7 @@ final class LocaleSettingsProvider
   }
 }
 
-String _$localeSettingsHash() => r'a7d17d524b52ef29ca08a523ea812538ef2ef43e';
+String _$localeSettingsHash() => r'b5fdec63ceacceb76dfb87c81d14a8ca63341366';
 
 abstract class _$LocaleSettings extends $Notifier<Locale> {
   Locale build();
@@ -50,8 +50,14 @@ abstract class _$LocaleSettings extends $Notifier<Locale> {
   void runBuild() {
     final created = build();
     final ref = this.ref as $Ref<Locale, Locale>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<Locale, Locale>, Locale, Object?, Object?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<Locale, Locale>,
+              Locale,
+              Object?,
+              Object?
+            >;
     element.handleValue(ref, created);
   }
 }

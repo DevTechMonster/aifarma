@@ -12,20 +12,24 @@ part of 'router.dart';
 @ProviderFor(authChangeNotifier)
 const authChangeProvider = AuthChangeNotifierProvider._();
 
-final class AuthChangeNotifierProvider extends $FunctionalProvider<
-    AuthChangeNotifier,
-    AuthChangeNotifier,
-    AuthChangeNotifier> with $Provider<AuthChangeNotifier> {
+final class AuthChangeNotifierProvider
+    extends
+        $FunctionalProvider<
+          AuthChangeNotifier,
+          AuthChangeNotifier,
+          AuthChangeNotifier
+        >
+    with $Provider<AuthChangeNotifier> {
   const AuthChangeNotifierProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'authChangeProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'authChangeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$authChangeNotifierHash();
@@ -33,8 +37,8 @@ final class AuthChangeNotifierProvider extends $FunctionalProvider<
   @$internal
   @override
   $ProviderElement<AuthChangeNotifier> $createElement(
-          $ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   AuthChangeNotifier create(Ref ref) {
@@ -60,15 +64,15 @@ final class RouterProvider
     extends $FunctionalProvider<GoRouter, GoRouter, GoRouter>
     with $Provider<GoRouter> {
   const RouterProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'routerProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'routerProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$routerHash();
@@ -92,4 +96,4 @@ final class RouterProvider
   }
 }
 
-String _$routerHash() => r'e2e045ada953ef140cd1a04d5e8a4d4e6ad5bf75';
+String _$routerHash() => r'1a88d9bdca178e65fdf9f817dc9ba5921615e051';

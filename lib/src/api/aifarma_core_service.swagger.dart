@@ -1,5 +1,5 @@
 // coverage:ignore-file
-// ignore_for_file: type=lint, unused_import
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element_parameter
 
 import 'package:json_annotation/json_annotation.dart';
@@ -7,7 +7,7 @@ import 'package:json_annotation/json_annotation.dart' as json;
 import 'package:collection/collection.dart';
 import 'dart:convert';
 
-import 'aifarma_core.models.swagger.dart';
+import 'aifarma_core_service.models.swagger.dart';
 import 'package:chopper/chopper.dart';
 
 import 'client_mapping.dart';
@@ -15,20 +15,20 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
-import 'aifarma_core.enums.swagger.dart' as enums;
-import 'aifarma_core.metadata.swagger.dart';
-export 'aifarma_core.enums.swagger.dart';
-export 'aifarma_core.models.swagger.dart';
+import 'aifarma_core_service.enums.swagger.dart' as enums;
+import 'aifarma_core_service.metadata.swagger.dart';
+export 'aifarma_core_service.enums.swagger.dart';
+export 'aifarma_core_service.models.swagger.dart';
 
-part 'aifarma_core.swagger.chopper.dart';
+part 'aifarma_core_service.swagger.chopper.dart';
 
 // **************************************************************************
 // SwaggerChopperGenerator
 // **************************************************************************
 
 @ChopperApi()
-abstract class AifarmaCore extends ChopperService {
-  static AifarmaCore create({
+abstract class AifarmaCoreService extends ChopperService {
+  static AifarmaCoreService create({
     ChopperClient? client,
     http.Client? httpClient,
     Authenticator? authenticator,
@@ -38,11 +38,11 @@ abstract class AifarmaCore extends ChopperService {
     List<Interceptor>? interceptors,
   }) {
     if (client != null) {
-      return _$AifarmaCore(client);
+      return _$AifarmaCoreService(client);
     }
 
     final newClient = ChopperClient(
-      services: [_$AifarmaCore()],
+      services: [_$AifarmaCoreService()],
       converter: converter ?? $JsonSerializableConverter(),
       interceptors: interceptors ?? [],
       client: httpClient,
@@ -50,7 +50,7 @@ abstract class AifarmaCore extends ChopperService {
       errorConverter: errorConverter,
       baseUrl: baseUrl ?? Uri.parse('http://'),
     );
-    return _$AifarmaCore(newClient);
+    return _$AifarmaCoreService(newClient);
   }
 
   ///List Agents

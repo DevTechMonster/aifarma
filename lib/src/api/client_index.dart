@@ -1,1 +1,1 @@
-export 'aifarma_core.swagger.dart' show AifarmaCore;
+export 'aifarma_core_service.swagger.dart' show AifarmaCoreService;

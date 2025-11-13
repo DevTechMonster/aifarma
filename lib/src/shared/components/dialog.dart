@@ -1,6 +1,7 @@
-import 'package:aifarma/src/shared/components/bar_button.dart';
-import 'package:aifarma/src/shared/utils/extensions.dart';
 import 'package:flutter/material.dart';
+
+import 'bar_button.dart';
+import '../utils/extensions.dart';
 
 class DialogConfirmation extends StatelessWidget {
   const DialogConfirmation({

@@ -15,15 +15,15 @@ const themeProvider = ThemeNotifierProvider._();
 final class ThemeNotifierProvider
     extends $NotifierProvider<ThemeNotifier, ThemeData> {
   const ThemeNotifierProvider._()
-      : super(
-          from: null,
-          argument: null,
-          retry: null,
-          name: r'themeProvider',
-          isAutoDispose: true,
-          dependencies: null,
-          $allTransitiveDependencies: null,
-        );
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'themeProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
 
   @override
   String debugGetCreateSourceHash() => _$themeNotifierHash();
@@ -50,8 +50,14 @@ abstract class _$ThemeNotifier extends $Notifier<ThemeData> {
   void runBuild() {
     final created = build();
     final ref = this.ref as $Ref<ThemeData, ThemeData>;
-    final element = ref.element as $ClassProviderElement<
-        AnyNotifier<ThemeData, ThemeData>, ThemeData, Object?, Object?>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<ThemeData, ThemeData>,
+              ThemeData,
+              Object?,
+              Object?
+            >;
     element.handleValue(ref, created);
   }
 }

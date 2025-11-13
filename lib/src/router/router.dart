@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:go_router/go_router.dart';
 
 // Authentication
-import '../authentication/provider/auth_provider.dart';
+import '../authentication/provider/auth_providers.dart';
 import '../authentication/view/login.dart';
 import '../authentication/view/signup.dart';
 import '../authentication/view/forgot_password.dart';
@@ -42,27 +42,30 @@ GoRouter router(Ref ref) {
   final authNotifier = ref.watch(authChangeProvider);
 
   return GoRouter(
-    initialLocation: RoutesName.login,
+    initialLocation: RoutesName.home, // TEMP: Bypass login for testing
     refreshListenable: authNotifier,
     redirect: (context, state) {
-      final authState = ref.read(authProvider);
-      final isAuthenticated = authState.isAuthenticated;
-      final isOnAuthPage = state.fullPath == RoutesName.login ||
-          state.fullPath == RoutesName.signup ||
-          state.fullPath == RoutesName.forgotPassword;
-
-      // If not authenticated and trying to access private route, redirect to login
-      if (!isAuthenticated && !isOnAuthPage) {
-        return RoutesName.login;
-      }
-
-      // If authenticated and on auth page, redirect to home
-      if (isAuthenticated && isOnAuthPage) {
-        return RoutesName.home;
-      }
-
-      // No redirect needed
+      // TEMP: Disable auth redirect for testing
       return null;
+
+      // final authState = ref.read(authProvider);
+      // final isAuthenticated = authState.isAuthenticated;
+      // final isOnAuthPage = state.fullPath == RoutesName.login ||
+      //     state.fullPath == RoutesName.signup ||
+      //     state.fullPath == RoutesName.forgotPassword;
+
+      // // If not authenticated and trying to access private route, redirect to login
+      // if (!isAuthenticated && !isOnAuthPage) {
+      //   return RoutesName.login;
+      // }
+
+      // // If authenticated and on auth page, redirect to home
+      // if (isAuthenticated && isOnAuthPage) {
+      //   return RoutesName.home;
+      // }
+
+      // // No redirect needed
+      // return null;
     },
     routes: [
       // Public routes
